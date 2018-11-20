@@ -1,0 +1,15 @@
+export const SIGN_UP = "/signup";
+export const SIGN_IN = "/signin";
+export const HOME = "/";
+export const ACCOUNT = "/account";
+export const PASSWORD_FORGET = "/pw-forget";
+export const COURSES = "/courses";
+export const COURSE_CONTENT = "/course-content";
+export const COURSE_CONTENT_TYPE = "/course-content-type";
+export const UPLOAD_VIDEO = "/upload-video";
+export const UPLOAD_AUDIO = "/upload-audio";
+export const UPLOAD_TEXT = "/upload-text";
+export const REPORTS = "/reports";
+export const CREATE_USERS = "/create-users";
+export const LOGOUT = "/logout";
+export const MY_PROFILE = "/profile";

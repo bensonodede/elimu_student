@@ -1,0 +1,997 @@
+patch-package
+--- a/node_modules/react-slideshow-ui/lib/ProgressBar.js
++++ b/node_modules/react-slideshow-ui/lib/ProgressBar.js
+@@ -9,26 +9,53 @@ var React = _interopRequireWildcard(require("react"));
+ 
+ var _recompose = require("recompose");
+ 
+-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
++function _interopRequireWildcard(obj) {
++  if (obj && obj.__esModule) {
++    return obj;
++  } else {
++    var newObj = {};
++    if (obj != null) {
++      for (var key in obj) {
++        if (Object.prototype.hasOwnProperty.call(obj, key)) {
++          var desc =
++            Object.defineProperty && Object.getOwnPropertyDescriptor
++              ? Object.getOwnPropertyDescriptor(obj, key)
++              : {};
++          if (desc.get || desc.set) {
++            Object.defineProperty(newObj, key, desc);
++          } else {
++            newObj[key] = obj[key];
++          }
++        }
++      }
++    }
++    newObj.default = obj;
++    return newObj;
++  }
++}
+ 
+-var _default = (0, _recompose.onlyUpdateForKeys)(['progress'])(function (_ref) {
++var _default = (0, _recompose.onlyUpdateForKeys)(["progress"])(function(_ref) {
+   var style = _ref.style,
+-      onClick = _ref.onClick,
+-      onMouseMove = _ref.onMouseMove,
+-      onMouseLeave = _ref.onMouseLeave,
+-      progress = _ref.progress;
+-  return React.createElement("div", {
+-    style: style,
+-    onClick: onClick,
+-    onMouseMove: onMouseMove,
+-    onMouseLeave: onMouseLeave
+-  }, React.createElement("div", {
+-    style: {
+-      backgroundColor: '#007bb6',
+-      height: '100%',
+-      width: "".concat(progress, "%")
+-    }
+-  }));
++    onClick = _ref.onClick,
++    onMouseMove = _ref.onMouseMove,
++    onMouseLeave = _ref.onMouseLeave,
++    progress = _ref.progress;
++  return React.createElement(
++    "div",
++    {
++      style: style,
++      //onClick: onClick,
++      onMouseMove: onMouseMove,
++      onMouseLeave: onMouseLeave
++    },
++    React.createElement("div", {
++      style: {
++        backgroundColor: "#007bb6",
++        height: "100%",
++        width: "".concat(progress, "%")
++      }
++    })
++  );
+ });
+ 
+ exports.default = _default;
+--- a/node_modules/react-slideshow-ui/lib/SlideShow.js
++++ b/node_modules/react-slideshow-ui/lib/SlideShow.js
+@@ -21,38 +21,144 @@ var _ProgressBar = _interopRequireDefault(require("./ProgressBar"));
+ 
+ var _PagingButton = _interopRequireDefault(require("./PagingButton"));
+ 
+-var _shallowEqualObject = _interopRequireDefault(require("./shallow-equal-object"));
++var _shallowEqualObject = _interopRequireDefault(
++  require("./shallow-equal-object")
++);
+ 
+ var _toggleFullscreen = _interopRequireDefault(require("toggle-fullscreen"));
+ 
+-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+-
+-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+-
+-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+-
+-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+-
+-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+-
+-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+-
+-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
++function _interopRequireDefault(obj) {
++  return obj && obj.__esModule ? obj : { default: obj };
++}
++
++function _interopRequireWildcard(obj) {
++  if (obj && obj.__esModule) {
++    return obj;
++  } else {
++    var newObj = {};
++    if (obj != null) {
++      for (var key in obj) {
++        if (Object.prototype.hasOwnProperty.call(obj, key)) {
++          var desc =
++            Object.defineProperty && Object.getOwnPropertyDescriptor
++              ? Object.getOwnPropertyDescriptor(obj, key)
++              : {};
++          if (desc.get || desc.set) {
++            Object.defineProperty(newObj, key, desc);
++          } else {
++            newObj[key] = obj[key];
++          }
++        }
++      }
++    }
++    newObj.default = obj;
++    return newObj;
++  }
++}
+ 
+-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
++function _typeof(obj) {
++  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
++    _typeof = function _typeof(obj) {
++      return typeof obj;
++    };
++  } else {
++    _typeof = function _typeof(obj) {
++      return obj &&
++        typeof Symbol === "function" &&
++        obj.constructor === Symbol &&
++        obj !== Symbol.prototype
++        ? "symbol"
++        : typeof obj;
++    };
++  }
++  return _typeof(obj);
++}
+ 
+-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
++function _classCallCheck(instance, Constructor) {
++  if (!(instance instanceof Constructor)) {
++    throw new TypeError("Cannot call a class as a function");
++  }
++}
++
++function _defineProperties(target, props) {
++  for (var i = 0; i < props.length; i++) {
++    var descriptor = props[i];
++    descriptor.enumerable = descriptor.enumerable || false;
++    descriptor.configurable = true;
++    if ("value" in descriptor) descriptor.writable = true;
++    Object.defineProperty(target, descriptor.key, descriptor);
++  }
++}
+ 
+-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
++function _createClass(Constructor, protoProps, staticProps) {
++  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
++  if (staticProps) _defineProperties(Constructor, staticProps);
++  return Constructor;
++}
+ 
+-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
++function _possibleConstructorReturn(self, call) {
++  if (call && (_typeof(call) === "object" || typeof call === "function")) {
++    return call;
++  }
++  return _assertThisInitialized(self);
++}
++
++function _getPrototypeOf(o) {
++  _getPrototypeOf = Object.setPrototypeOf
++    ? Object.getPrototypeOf
++    : function _getPrototypeOf(o) {
++        return o.__proto__ || Object.getPrototypeOf(o);
++      };
++  return _getPrototypeOf(o);
++}
+ 
+-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
++function _inherits(subClass, superClass) {
++  if (typeof superClass !== "function" && superClass !== null) {
++    throw new TypeError("Super expression must either be null or a function");
++  }
++  subClass.prototype = Object.create(superClass && superClass.prototype, {
++    constructor: { value: subClass, writable: true, configurable: true }
++  });
++  if (superClass) _setPrototypeOf(subClass, superClass);
++}
++
++function _setPrototypeOf(o, p) {
++  _setPrototypeOf =
++    Object.setPrototypeOf ||
++    function _setPrototypeOf(o, p) {
++      o.__proto__ = p;
++      return o;
++    };
++  return _setPrototypeOf(o, p);
++}
++
++function _assertThisInitialized(self) {
++  if (self === void 0) {
++    throw new ReferenceError(
++      "this hasn't been initialised - super() hasn't been called"
++    );
++  }
++  return self;
++}
++
++function _defineProperty(obj, key, value) {
++  if (key in obj) {
++    Object.defineProperty(obj, key, {
++      value: value,
++      enumerable: true,
++      configurable: true,
++      writable: true
++    });
++  } else {
++    obj[key] = value;
++  }
++  return obj;
++}
+ 
+ var fullscreenChange = _toggleFullscreen.default.fullscreenChange;
+ var isFullscreen = _toggleFullscreen.default.isFullscreen;
+ 
+-var SlideShow = function (_React$Component) {
++var SlideShow = (function(_React$Component) {
+   _inherits(SlideShow, _React$Component);
+ 
+   function SlideShow(props) {
+@@ -60,152 +166,228 @@ var SlideShow = function (_React$Component) {
+ 
+     _classCallCheck(this, SlideShow);
+ 
+-    _this = _possibleConstructorReturn(this, _getPrototypeOf(SlideShow).call(this, props));
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", void 0);
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "props", void 0);
++    _this = _possibleConstructorReturn(
++      this,
++      _getPrototypeOf(SlideShow).call(this, props)
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "sta te",
++      void 0
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "props",
++      void 0
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "timestamp",
++      void 0
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onClickPrevButton",
++      function() {
++        if (_this.isEmptyArray(_this.props.images)) {
++          return;
++        }
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "timestamp", void 0);
++        if (_this.state.index === 0) {
++          return;
++        }
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onClickPrevButton", function () {
+-      if (_this.isEmptyArray(_this.props.images)) {
+-        return;
+-      }
++        var nextIndex = _this.state.index - 1;
+ 
+-      if (_this.state.index === 0) {
+-        return;
++        _this.updatePageState(nextIndex);
+       }
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onClickNextButton",
++      function() {
++        if (!_this.props.images) {
++          return;
++        }
+ 
+-      var nextIndex = _this.state.index - 1;
+-
+-      _this.updatePageState(nextIndex);
+-    });
++        if (_this.state.index === _this.props.images.length - 1) {
++          return;
++        }
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onClickNextButton", function () {
+-      if (!_this.props.images) {
+-        return;
+-      }
++        var nextIndex = _this.state.index + 1;
+ 
+-      if (_this.state.index === _this.props.images.length - 1) {
+-        return;
++        _this.updatePageState(nextIndex);
+       }
++    );
+ 
+-      var nextIndex = _this.state.index + 1;
+-
+-      _this.updatePageState(nextIndex);
+-    });
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onClickProgressBar",
++      function(e) {
++        var nextIndex = _this.calcProgressIndex(e);
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onClickProgressBar", function (e) {
+-      var nextIndex = _this.calcProgressIndex(e);
++        if (nextIndex === undefined || nextIndex === null) {
++          return;
++        }
+ 
+-      if (nextIndex === undefined || nextIndex === null) {
+-        return;
++        _this.updatePageState(nextIndex);
+       }
++    );
+ 
+-      _this.updatePageState(nextIndex);
+-    });
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onMouseMoveProgressBar", function (e) {
+-      var nextIndex = _this.calcProgressIndex(e);
+-
+-      _this.setState({
+-        preview: 1,
+-        previewIndex: nextIndex
+-      });
+-    });
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onMouseLeaveProgressBar", function (e) {
+-      _this.setState({
+-        preview: 0
+-      });
+-    });
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onChangeFullScreen", function () {
+-      var element = document.getElementsByClassName("".concat(_this.props.className, "-wrapper"))[0];
+-
+-      var fn = function fn() {
+-        var isFullScreen = isFullscreen();
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onMouseMoveProgressBar",
++      function(e) {
++        var nextIndex = _this.calcProgressIndex(e);
+ 
+         _this.setState({
+-          isFullScreen: isFullScreen
++          preview: 1,
++          previewIndex: nextIndex
+         });
++      }
++    );
+ 
+-        if (isFullScreen) {
+-          document.addEventListener('keydown', _this.keydownEvent);
+-          element.style.width = '70%';
+-        } else {
+-          document.removeEventListener('keydown', _this.keydownEvent);
+-          element.style.width = '100%';
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onMouseLeaveProgressBar",
++      function(e) {
++        _this.setState({
++          preview: 0
++        });
++      }
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "onChangeFullScreen",
++      function() {
++        var element = document.getElementsByClassName(
++          "".concat(_this.props.className, "-wrapper")
++        )[0];
++
++        var fn = function fn() {
++          var isFullScreen = isFullscreen();
++
++          _this.setState({
++            isFullScreen: isFullScreen
++          });
++
++          if (isFullScreen) {
++            document.addEventListener("keydown", _this.keydownEvent);
++            element.style.width = "70%";
++          } else {
++            document.removeEventListener("keydown", _this.keydownEvent);
++            element.style.width = "100%";
++          }
++        };
++
++        Promise.all([
++          (0, _toggleFullscreen.default)(element),
++          fullscreenChange(fn)
++        ]);
++      }
++    );
++
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "keydownEvent",
++      function(e) {
++        e.preventDefault();
++
++        if (
++          e.key === "ArrowUp" ||
++          e.key === "ArrowLeft" ||
++          e.keyCode === 37 ||
++          e.keyCode === 38
++        ) {
++          _this.onClickPrevButton();
++        } else if (
++          e.key === "ArrowDown" ||
++          e.key === "ArrowRight" ||
++          e.keyCode === 39 ||
++          e.keyCode === 40 ||
++          e.keyCode === 32
++        ) {
++          _this.onClickNextButton();
++        } else if (e.key === "Escape" || e.keyCode === 27) {
++          _this.onChangeFullScreen();
+         }
+-      };
+-
+-      Promise.all([(0, _toggleFullscreen.default)(element), fullscreenChange(fn)]);
+-    });
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "keydownEvent", function (e) {
+-      e.preventDefault();
+-
+-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.keyCode === 37 || e.keyCode === 38) {
+-        _this.onClickPrevButton();
+-      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.keyCode === 39 || e.keyCode === 40 || e.keyCode === 32) {
+-        _this.onClickNextButton();
+-      } else if (e.key === 'Escape' || e.keyCode === 27) {
+-        _this.onChangeFullScreen();
+       }
+-    });
++    );
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "calcProgressIndex", function (e) {
+-      var parent = e.currentTarget.parentElement;
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "calcProgressIndex",
++      function(e) {
++        var parent = e.currentTarget.parentElement;
+ 
+-      if (!parent) {
+-        return;
+-      }
++        if (!parent) {
++          return;
++        }
+ 
+-      var barWidth = parent.children[0].offsetWidth;
+-      var progressWidth = e.clientX - e.currentTarget.getBoundingClientRect().left;
+-      var clickPosition = Math.floor(progressWidth / barWidth * 100);
+-      var nextIndex = 0;
++        var barWidth = parent.children[0].offsetWidth;
++        var progressWidth =
++          e.clientX - e.currentTarget.getBoundingClientRect().left;
++        var clickPosition = Math.floor((progressWidth / barWidth) * 100);
++        var nextIndex = 0;
+ 
+-      for (var i = 0; i < _this.props.images.length; i++) {
+-        var checkWidth = _this.calcProgress(i);
++        for (var i = 0; i < _this.props.images.length; i++) {
++          var checkWidth = _this.calcProgress(i);
+ 
+-        if (clickPosition >= checkWidth) {
+-          nextIndex = i;
++          if (clickPosition >= checkWidth) {
++            nextIndex = i;
++          }
+         }
++
++        return nextIndex;
+       }
++    );
+ 
+-      return nextIndex;
+-    });
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "calcProgress",
++      function(page) {
++        var base = 100 / _this.props.images.length;
++        var progress = Math.ceil(base * page);
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "calcProgress", function (page) {
+-      var base = 100 / _this.props.images.length;
+-      var progress = Math.ceil(base * page);
++        if (progress > 100) {
++          return 100;
++        }
+ 
+-      if (progress > 100) {
+-        return 100;
++        return progress;
+       }
++    );
+ 
+-      return progress;
+-    });
+-
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isEmptyArray", function (arr) {
+-      return arr === undefined || arr === null || arr.length === 0;
+-    });
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "isEmptyArray",
++      function(arr) {
++        return arr === undefined || arr === null || arr.length === 0;
++      }
++    );
+ 
+-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "updatePageState", function (index) {
+-      var progress = _this.calcProgress(index + 1);
++    _defineProperty(
++      _assertThisInitialized(_assertThisInitialized(_this)),
++      "updatePageState",
++      function(index) {
++        var progress = _this.calcProgress(index + 1);
+ 
+-      var image = _this.props.images[index];
++        var image = _this.props.images[index];
+ 
+-      _this.setState({
+-        src: image,
+-        index: index,
+-        progress: progress
+-      });
++        _this.setState({
++          src: image,
++          index: index,
++          progress: progress
++        });
+ 
+-      _this.props.pageWillUpdate(index, image);
+-    });
++        _this.props.pageWillUpdate(index, image);
++      }
++    );
+ 
+     _this.timestamp = 0;
+ 
+@@ -222,118 +404,179 @@ var SlideShow = function (_React$Component) {
+     }
+ 
+     if (_styles.default.ROOT.height) {
+-      _styles.default.IMAGE.height = _styles.default.ROOT.height - _styles.default.BAR.height - _styles.default.PROGRESS_BAR.height + 5;
++      _styles.default.IMAGE.height =
++        _styles.default.ROOT.height -
++        _styles.default.BAR.height -
++        _styles.default.PROGRESS_BAR.height +
++        5;
+     }
+ 
+     _this.state = {
+-      src: '',
++      src: "",
+       index: 0,
+       progress: 0,
+       preview: 0,
+       previewIndex: 0,
+-      isFullScreen: false
++      isFullScreen: false,
++      forwardDisabled: true
+     };
+     return _this;
+   }
+ 
+-  _createClass(SlideShow, [{
+-    key: "componentWillMount",
+-    value: function componentWillMount() {
+-      var images = this.props.images;
+-
+-      if (this.isEmptyArray(this.props.images)) {
+-        return;
+-      }
+-
+-      var progress = Math.ceil(100 / images.length);
+-
+-      if (progress > 100) {
+-        progress = 100;
+-      }
++  _createClass(SlideShow, [
++    {
++      key: "componentWillMount",
++      value: function componentWillMount() {
++        setTimeout(
++          function() {
++            this.setState({ forwardDisabled: false }, function() {
++              console.log(this.state);
++            });
++          }.bind(this),
++          1 * 60 * 1000
++        );
++
++        var images = this.props.images;
++
++        if (this.isEmptyArray(this.props.images)) {
++          return;
++        }
+ 
+-      this.setState({
+-        src: images[0],
+-        index: 0,
+-        progress: progress,
+-        preview: 0,
+-        previewIndex: 0,
+-        isFullScreen: false
+-      });
+-    }
+-  }, {
+-    key: "shouldComponentUpdate",
+-    value: function shouldComponentUpdate(nextProps, nextState) {
+-      if ((0, _shallowEqualObject.default)(this.props, nextProps)) {
+-        return true;
+-      }
++        var progress = Math.ceil(100 / images.length);
+ 
+-      if ((0, _shallowEqualObject.default)(this.state, nextState)) {
+-        return true;
+-      }
++        if (progress > 100) {
++          progress = 100;
++        }
+ 
+-      if (this.props.images.length !== nextProps.images.length) {
+-        return true;
++        this.setState({
++          src: images[0],
++          index: 0,
++          progress: progress,
++          preview: 0,
++          previewIndex: 0,
++          isFullScreen: false
++        });
+       }
++    },
++    {
++      key: "shouldComponentUpdate",
++      value: function shouldComponentUpdate(nextProps, nextState) {
++        if ((0, _shallowEqualObject.default)(this.props, nextProps)) {
++          return true;
++        }
+ 
+-      for (var i = 0; i < this.props.images.length; i++) {
+-        var prev = this.props.images[i];
+-        var next = nextProps.images[i];
++        if ((0, _shallowEqualObject.default)(this.state, nextState)) {
++          return true;
++        }
+ 
+-        if (prev !== next) {
++        if (this.props.images.length !== nextProps.images.length) {
+           return true;
+         }
+-      }
+ 
+-      return false;
+-    }
+-  }, {
+-    key: "render",
+-    value: function render() {
+-      return React.createElement("div", {
+-        style: _styles.default.ROOT,
+-        className: this.props.className
+-      }, React.createElement("div", {
+-        className: "".concat(this.props.className, "-wrapper"),
+-        style: {
+-          margin: 'auto'
++        for (var i = 0; i < this.props.images.length; i++) {
++          var prev = this.props.images[i];
++          var next = nextProps.images[i];
++
++          if (prev !== next) {
++            return true;
++          }
+         }
+-      }, React.createElement(_Viewer.default, {
+-        imgClassName: "".concat(this.props.className, "-image"),
+-        styles: _styles.default,
+-        src: this.state.src,
+-        onClickPrevButton: this.onClickPrevButton,
+-        onClickNextButton: this.onClickNextButton,
+-        timestamp: this.timestamp
+-      }), React.createElement(_Preview.default, {
+-        opacity: this.state.preview,
+-        previewIndex: this.state.previewIndex,
+-        images: this.props.images,
+-        isFullScreen: this.state.isFullScreen,
+-        imgClassName: "".concat(this.props.className, "-image")
+-      }), React.createElement(_ProgressBar.default, {
+-        style: _styles.default.PROGRESS_BAR,
+-        onClick: this.onClickProgressBar,
+-        onMouseMove: this.onMouseMoveProgressBar,
+-        onMouseLeave: this.onMouseLeaveProgressBar,
+-        progress: this.state.progress
+-      }), React.createElement("div", {
+-        style: _styles.default.BAR
+-      }, React.createElement(_PagingButton.default, {
+-        onClick: this.onClickPrevButton
+-      }, this.props.prevIcon), React.createElement("span", {
+-        style: _styles.default.PAGE_VIEW
+-      }, "".concat(this.state.index + 1, " / ").concat(this.props.images ? this.props.images.length : 0)), React.createElement(_PagingButton.default, {
+-        onClick: this.onClickNextButton
+-      }, this.props.nextIcon), this.props.showFullscreenIcon ? React.createElement(_FullscreenButton.default, {
+-        onClick: this.onChangeFullScreen
+-      }, React.createElement(_FullscreenIcon.default, {
+-        isFullScreen: this.state.isFullScreen
+-      })) : null)));
++
++        return false;
++      }
++    },
++    {
++      key: "render",
++      value: function render() {
++        return React.createElement(
++          "div",
++          {
++            style: _styles.default.ROOT,
++            className: this.props.className
++          },
++          React.createElement(
++            "div",
++            {
++              className: "".concat(this.props.className, "-wrapper"),
++              style: {
++                margin: "auto"
++              }
++            },
++            React.createElement(_Viewer.default, {
++              imgClassName: "".concat(this.props.className, "-image"),
++              styles: _styles.default,
++              src: this.state.src,
++              onClickPrevButton: this.onClickPrevButton,
++              onClickNextButton: this.onClickNextButton,
++              timestamp: this.timestamp
++            }),
++            React.createElement(_Preview.default, {
++              opacity: this.state.preview,
++              previewIndex: this.state.previewIndex,
++              images: this.props.images,
++              isFullScreen: this.state.isFullScreen,
++              imgClassName: "".concat(this.props.className, "-image")
++            }),
++            React.createElement(_ProgressBar.default, {
++              style: _styles.default.PROGRESS_BAR,
++              onClick: this.onClickProgressBar,
++              onMouseMove: this.onMouseMoveProgressBar,
++              onMouseLeave: this.onMouseLeaveProgressBar,
++              progress: this.state.progress
++            }),
++            React.createElement(
++              "div",
++              {
++                style: _styles.default.BAR
++              },
++
++              React.createElement(
++                _PagingButton.default,
++                {
++                  onClick: this.onClickPrevButton
++                },
++                this.props.prevIcon
++              ),
++              React.createElement(
++                "span",
++                {
++                  style: _styles.default.PAGE_VIEW
++                },
++                ""
++                  .concat(this.state.index + 1, " / ")
++                  .concat(this.props.images ? this.props.images.length : 0)
++              ),
++
++              this.state.forwardDisabled
++                ? null
++                : React.createElement(
++                    _PagingButton.default,
++                    {
++                      onClick: this.onClickNextButton
++                    },
++                    this.props.nextIcon
++                  ),
++
++              this.props.showFullscreenIcon
++                ? React.createElement(
++                    _FullscreenButton.default,
++                    {
++                      onClick: this.onChangeFullScreen
++                    },
++                    React.createElement(_FullscreenIcon.default, {
++                      isFullScreen: this.state.isFullScreen
++                    })
++                  )
++                : null
++            )
++          )
++        );
++      }
+     }
+-  }]);
++  ]);
+ 
+   return SlideShow;
+-}(React.Component);
++})(React.Component);
+ 
+ exports.default = SlideShow;
+ 
+@@ -343,26 +586,34 @@ SlideShow.defaultProps = {
+   arrowButtonStyle: _styles.default.ARROW_BUTTON,
+   style: {},
+   images: [],
+-  prevIcon: React.createElement("svg", {
+-    style: _styles.default.ARROW_BUTTON,
+-    viewBox: "0 0 8 8"
+-  }, React.createElement("path", {
+-    fill: "#fff",
+-    d: "M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z",
+-    transform: "translate(0 1)"
+-  })),
+-  nextIcon: React.createElement("svg", {
+-    style: _styles.default.ARROW_BUTTON,
+-    viewBox: "0 0 8 8"
+-  }, React.createElement("path", {
+-    fill: "#fff",
+-    d: "M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z",
+-    transform: "translate(0 1)"
+-  })),
++  prevIcon: React.createElement(
++    "svg",
++    {
++      style: _styles.default.ARROW_BUTTON,
++      viewBox: "0 0 8 8"
++    },
++    React.createElement("path", {
++      fill: "#fff",
++      d: "M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z",
++      transform: "translate(0 1)"
++    })
++  ),
++  nextIcon: React.createElement(
++    "svg",
++    {
++      style: _styles.default.ARROW_BUTTON,
++      viewBox: "0 0 8 8"
++    },
++    React.createElement("path", {
++      fill: "#fff",
++      d: "M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z",
++      transform: "translate(0 1)"
++    })
++  ),
+   withTimestamp: false,
+   pageWillUpdate: function pageWillUpdate(index, image) {
+     return;
+   },
+-  className: 'slideshow',
++  className: "slideshow",
+   showFullscreenIcon: true
+ };
+--- a/node_modules/react-slideshow-ui/lib/Viewer.js
++++ b/node_modules/react-slideshow-ui/lib/Viewer.js
+@@ -9,36 +9,70 @@ var React = _interopRequireWildcard(require("react"));
+ 
+ var _recompose = require("recompose");
+ 
+-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
++function _interopRequireWildcard(obj) {
++  if (obj && obj.__esModule) {
++    return obj;
++  } else {
++    var newObj = {};
++    if (obj != null) {
++      for (var key in obj) {
++        if (Object.prototype.hasOwnProperty.call(obj, key)) {
++          var desc =
++            Object.defineProperty && Object.getOwnPropertyDescriptor
++              ? Object.getOwnPropertyDescriptor(obj, key)
++              : {};
++          if (desc.get || desc.set) {
++            Object.defineProperty(newObj, key, desc);
++          } else {
++            newObj[key] = obj[key];
++          }
++        }
++      }
++    }
++    newObj.default = obj;
++    return newObj;
++  }
++}
+ 
+-var _default = (0, _recompose.onlyUpdateForKeys)(['src', 'timestamp', 'imgClassName'])(function (_ref) {
++var _default = (0, _recompose.onlyUpdateForKeys)([
++  "src",
++  "timestamp",
++  "imgClassName"
++])(function(_ref) {
+   var styles = _ref.styles,
+-      src = _ref.src,
+-      onClickPrevButton = _ref.onClickPrevButton,
+-      onClickNextButton = _ref.onClickNextButton,
+-      timestamp = _ref.timestamp,
+-      imgClassName = _ref.imgClassName;
++    src = _ref.src,
++    onClickPrevButton = _ref.onClickPrevButton,
++    onClickNextButton = _ref.onClickNextButton,
++    timestamp = _ref.timestamp,
++    imgClassName = _ref.imgClassName;
+   var _src = src;
+ 
+   if (timestamp) {
+     _src += "?".concat(timestamp);
+   }
+ 
+-  return React.createElement("div", {
+-    style: styles.IMAGE
+-  }, React.createElement("img", {
+-    className: imgClassName,
+-    src: _src,
+-    style: {
+-      width: '100%'
+-    }
+-  }), React.createElement("div", {
+-    onClick: onClickPrevButton,
+-    style: styles.PREV_ON_CONTENT
+-  }), React.createElement("div", {
+-    onClick: onClickNextButton,
+-    style: styles.NEXT_ON_CONTENT
+-  }));
++  return React.createElement(
++    "div",
++    {
++      style: styles.IMAGE
++    },
++    React.createElement("img", {
++      className: imgClassName,
++      src: _src,
++      style: {
++        width: "100%"
++      }
++    })
++
++    //React.createElement("div", {
++    //  onClick: onClickPrevButton,
++    //  style: styles.PREV_ON_CONTENT
++    //}),
++    //React.createElement("div", {
++    //  onClick: onClickNextButton,
++    //  style: styles.NEXT_ON_CONTENT
++    //})
++  );
+ });
+ 
+ exports.default = _default;
