@@ -1,18 +1,30 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect, withRouter } from "react-router-dom";
 import * as routes from "../constants/routes";
 import { firebase } from "../firebase";
-import { onceGetInstructor } from "../firebase/db";
-export default class Courses extends Component {
+
+class Courses extends Component {
   constructor() {
     super();
     this.state = {
-      courses: []
+      courses: [],
+      signIn: false
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      console.log(authUser);
+      if (authUser) {
+        return null;
+      } else {
+        this.setState({ signIn: true });
+      }
+    });
+  }
   render() {
-    const { courses } = this.state;
+    if (this.state.signIn) {
+      return <Redirect to="/signin" />;
+    }
     return (
       <div>
         <table className="mui-table">
@@ -26,11 +38,11 @@ export default class Courses extends Component {
               <NavLink
                 to={{
                   pathname: routes.COURSE_CONTENT,
-                  state: { id: "ECO 1020" }
+                  state: { id: "TEST 101" }
                 }}
               >
                 <h4>
-                  <td>ECO 1020</td>
+                  <td>TEST 101</td>
                 </h4>
               </NavLink>
             </tr>
@@ -40,3 +52,5 @@ export default class Courses extends Component {
     );
   }
 }
+
+export default withRouter(Courses);

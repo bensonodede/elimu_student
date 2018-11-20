@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import * as routes from "../constants/routes";
 import "../styles/Course.css";
 import { onceGetCourse, onceGetSlides } from "../firebase/db";
 
-export default class courseContentType extends Component {
+class courseContentType extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,25 +33,15 @@ export default class courseContentType extends Component {
         console.log(doc.data());
       });
       this.setState({ course, courseUid, week });
-      this.setState(
-        {
-          audioSource: course[week][0],
-          videoSource: course[week][1],
-          textSource: imgs.id
-        },
-        () => {
-          // console.log(this.state);
-          // db.collection(course[week][2]).then(doc => {
-          //   console.log(doc.data());
-          // });
-        }
-      );
+      this.setState({
+        audioSource: course[week][0],
+        videoSource: course[week][1],
+        textSource: imgs.id
+      });
     });
   }
 
-  componentDidMount() {
-    let { courseUid, course } = this.state;
-  }
+  componentDidMount() {}
 
   render() {
     let { courseUid, week, audioSource, videoSource, textSource } = this.state;
@@ -59,7 +49,7 @@ export default class courseContentType extends Component {
     return (
       <div>
         <h3>{week}</h3>
-        <h2>ECO 1020</h2>
+        <h2>TEST 101</h2>
         <div className="grid-container">
           <button>
             <NavLink
@@ -111,3 +101,5 @@ export default class courseContentType extends Component {
     );
   }
 }
+
+export default withRouter(courseContentType);

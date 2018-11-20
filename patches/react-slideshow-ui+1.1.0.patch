@@ -73,6 +73,7 @@ patch-package
  });
  
  exports.default = _default;
+\ No newline at end of file
 --- a/node_modules/react-slideshow-ui/lib/SlideShow.js
 +++ b/node_modules/react-slideshow-ui/lib/SlideShow.js
 @@ -21,38 +21,144 @@ var _ProgressBar = _interopRequireDefault(require("./ProgressBar"));
@@ -240,7 +241,7 @@ patch-package
    _inherits(SlideShow, _React$Component);
  
    function SlideShow(props) {
-@@ -60,152 +166,228 @@ var SlideShow = function (_React$Component) {
+@@ -60,152 +166,237 @@ var SlideShow = function (_React$Component) {
  
      _classCallCheck(this, SlideShow);
  
@@ -301,7 +302,20 @@ patch-package
 +      _assertThisInitialized(_assertThisInitialized(_this)),
 +      "onClickNextButton",
 +      function() {
++        this.setState({ forwardDisabled: true });
++        setTimeout(
++          function() {
++            this.setState({ forwardDisabled: false }, function() {
++              console.log(this.state);
++            });
++          }.bind(this),
++          1 * 30 * 1000
++        );
++
 +        if (!_this.props.images) {
++          return;
++        }
++        if (_this.state.index === _this.props.images.length - 1) {
 +          return;
 +        }
  
@@ -309,10 +323,7 @@ patch-package
 -
 -      _this.updatePageState(nextIndex);
 -    });
-+        if (_this.state.index === _this.props.images.length - 1) {
-+          return;
-+        }
- 
+-
 -    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onClickNextButton", function () {
 -      if (!_this.props.images) {
 -        return;
@@ -580,7 +591,7 @@ patch-package
  
      _this.timestamp = 0;
  
-@@ -222,118 +404,179 @@ var SlideShow = function (_React$Component) {
+@@ -222,118 +413,179 @@ var SlideShow = function (_React$Component) {
      }
  
      if (_styles.default.ROOT.height) {
@@ -630,7 +641,7 @@ patch-package
 +              console.log(this.state);
 +            });
 +          }.bind(this),
-+          1 * 60 * 1000
++          1 * 30 * 1000
 +        );
 +
 +        var images = this.props.images;
@@ -818,7 +829,7 @@ patch-package
 +                : React.createElement(
 +                    _PagingButton.default,
 +                    {
-+                      onClick: this.onClickNextButton
++                      onClick: this.onClickNextButton.bind(this)
 +                    },
 +                    this.props.nextIcon
 +                  ),
@@ -848,7 +859,7 @@ patch-package
  
  exports.default = SlideShow;
  
-@@ -343,26 +586,34 @@ SlideShow.defaultProps = {
+@@ -343,26 +595,34 @@ SlideShow.defaultProps = {
    arrowButtonStyle: _styles.default.ARROW_BUTTON,
    style: {},
    images: [],
@@ -995,3 +1006,4 @@ patch-package
  });
  
  exports.default = _default;
+\ No newline at end of file

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 //import convertapiPackage from "convertapi";
 //import request from "superagent";
 import { firebase } from "../firebase";
@@ -8,13 +8,13 @@ import "../styles/Home.css";
 import "../styles/App.css";
 
 import * as routes from "../constants/routes";
-import { forEach } from "@firebase/util";
+//import { forEach } from "@firebase/util";
 
 //const CLOUDINARY_UPLOAD_PRESET = "kmw1p7ca";
 // const CLOUDINARY_UPLOAD_URL =
 //   "https://api.cloudinary.com/v1_1/dsn5fhldk/upload/";
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor() {
     super();
     this.state = {
@@ -45,6 +45,8 @@ export default class HomePage extends Component {
           .catch(error => {
             console.log("Error getting students");
           });
+      } else {
+        this.props.history.push("./signin");
       }
     });
   }
@@ -100,3 +102,5 @@ export default class HomePage extends Component {
     );
   }
 }
+
+export default withRouter(HomePage);

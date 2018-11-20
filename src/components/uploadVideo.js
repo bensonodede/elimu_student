@@ -10,16 +10,18 @@ export default class uploadVideo extends Component {
     this.state = {
       studentUid: "",
       courseUid: "",
+      week: "",
       Interaction: 0,
       format: "video"
     };
   }
   componentDidMount() {
-    let courseUid = this.props.location.state.courseUid;
+    let { week, courseUid } = this.props.location.state;
+    console.log(this.props.location.state);
     firebase.auth.onAuthStateChanged(authUser => {
       if (authUser) {
         console.log(authUser.uid);
-        this.setState({ studentUid: authUser.uid, courseUid });
+        this.setState({ studentUid: authUser.uid, courseUid, week });
       }
     });
     let player = window.videojs(this.refs.player, {}).ready(() => {

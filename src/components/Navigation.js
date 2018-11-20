@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import * as routes from "../constants/routes";
 import "../styles/App.css";
 
-export default class Navigation extends Component {
+class Navigation extends Component {
   render() {
     return (
       <div className="Header-Container">
-        <h1 className="Menu-Logo">ELIMU</h1>
+        <h2 className="Menu-Logo">ELIMU</h2>
         <div className=" Menu-Container">
           <ul className=" Menu-List">
             <p className="Menu-Item">
@@ -27,15 +27,6 @@ export default class Navigation extends Component {
                 to={routes.COURSES}
               >
                 Courses
-              </NavLink>
-            </p>
-            <p className="Menu-Item">
-              <NavLink
-                activeClassName="Menu-Link-Active"
-                className="Menu-Link"
-                to={routes.REPORTS}
-              >
-                Reports
               </NavLink>
             </p>
             <p className="Menu-Item">
@@ -62,3 +53,5 @@ export default class Navigation extends Component {
     );
   }
 }
+
+export default withRouter(Navigation);

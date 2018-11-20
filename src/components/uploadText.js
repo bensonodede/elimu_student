@@ -10,7 +10,7 @@ export default class PreviousNextMethods extends Component {
       studentId: "",
       courseUid: "",
       week: "",
-      viewed: [],
+      viewed: [0],
       images: null,
       format: "text"
     };
@@ -38,9 +38,9 @@ export default class PreviousNextMethods extends Component {
   componentWillUnmount() {
     console.log(this.state);
     let { studentId, courseUid, week, format, viewed } = this.state;
-    var uniq = [...new Set(this.state.viewed)];
-    console.log(uniq);
-    let session = { studentId, courseUid, week, format, uniq };
+    let slidesViewed = [...new Set(this.state.viewed)];
+    console.log(viewed);
+    let session = { studentId, courseUid, week, format, slidesViewed };
     console.log(session);
     doCreateSession(session)
       .then(result => {

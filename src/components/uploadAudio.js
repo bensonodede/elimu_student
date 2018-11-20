@@ -9,16 +9,17 @@ export default class uploadAudio extends Component {
     super(props);
     this.state = {
       studentUid: "",
+      week: "",
       courseUid: "",
       Interaction: 0,
       format: "audio"
     };
   }
   componentDidMount() {
-    let courseUid = this.props.location.state.courseUid;
+    let { week, courseUid } = this.props.location.state;
     firebase.auth.onAuthStateChanged(authUser => {
       if (authUser) {
-        this.setState({ studentUid: authUser.uid, courseUid });
+        this.setState({ studentUid: authUser.uid, courseUid, week });
       } else {
         console.log("NONE");
       }

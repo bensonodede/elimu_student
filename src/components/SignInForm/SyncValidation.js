@@ -2,23 +2,19 @@ import React from "react";
 import { Form } from "react-advanced-form";
 import { Input, Button } from "react-advanced-form-addons";
 import { auth } from "../../firebase";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
+import "../../styles/App.css";
 
-export default class SyncValidation extends React.Component {
+class SyncValidation extends React.Component {
   constructor() {
     super();
     this.state = {
       userEmail: "",
       userPassword: "",
-      error: ""
+      error: "",
+      signin: false
     };
   }
-
-  renderRedirect = () => {
-    //if (!this.state.user) {
-    return <Redirect to={{ pathname: "/" }} />;
-    //}
-  };
 
   signInUser = event => {
     console.log(this.state);
@@ -29,7 +25,7 @@ export default class SyncValidation extends React.Component {
       .doSignInWithEmailAndPassword(userEmail.nextValue, userPassword.nextValue)
       .then(authUser => {
         console.log(authUser);
-        this.renderRedirect();
+        this.props.history.push("/courses");
       })
       .catch(error => {
         console.log(error);
@@ -43,7 +39,7 @@ export default class SyncValidation extends React.Component {
   render() {
     const error = this.state;
     return (
-      <Form action={this.signInUser}>
+      <Form className="App-container" action={this.signInUser}>
         <Input
           onChange={text =>
             this.setState({ userEmail: text }, () => {
@@ -70,3 +66,5 @@ export default class SyncValidation extends React.Component {
     );
   }
 }
+
+export default withRouter(SyncValidation);
